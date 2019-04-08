@@ -40,6 +40,7 @@ export default Vue.extend({
 
 progress.memory-usage {
   appearance: none;
+  border: 0;
   $width: 10em;
   width: $width;
   margin-right: 5px;

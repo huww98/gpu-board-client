@@ -1,6 +1,9 @@
 <template>
   <div>
-    <server v-for="addr in addresses" :key="addr" :address="addr"/>
+    <h1>GPU服务器仪表盘/h1>
+    <div class="server-container">
+      <server v-for="addr in addresses" :key="addr" :address="addr"/>
+    </div>
   </div>
 </template>
 
@@ -21,3 +24,10 @@ export default Vue.extend({
   },
 });
 </script>
+
+<style lang="scss" scoped>
+.server-container {
+  display: flex;
+  flex-flow: row wrap;
+}
+</style>
