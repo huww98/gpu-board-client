@@ -2,21 +2,23 @@ import io from 'socket.io-client';
 import { GPUData } from './types';
 
 interface IOGPUData {
-    hostname: string;
     gpus: Array<{
         index: number;
         name: string;
-        uuid: string;
-        'utilization.gpu': number;
-        'temperature.gpu': number;
-        'memory.used': number;
-        'memory.total': number;
-        'enforced.power.limit'?: number;
-        'power.draw'?: number;
+        utilization: {
+            gpu: number,
+            memory: number,
+        };
+        memory: {
+            total: number;
+            used: number;
+            free: number;
+        };
         processes: Array<{
             pid: number;
             username: string;
             command: string;
+            name: string;
             gpu_memory_usage: number;
         }>;
     }>;
@@ -34,19 +36,18 @@ export class GPUStatusPublisher {
     public onGPUStatusUpdated(callback: (data: GPUData) => void) {
         this.ioSocket.on('gpustat', (rawData: IOGPUData) => {
             const parsedData: GPUData = {
-                hostname: rawData.hostname,
                 queryTime: rawData.query_time,
                 gpus: rawData.gpus.map((g) => ({
                     index: g.index,
                     name: g.name,
-                    gpuUtilization: g['utilization.gpu'],
-                    gpuTemperature: g['temperature.gpu'],
-                    usedMemory: g['memory.used'],
-                    totalMemory: g['memory.total'],
+                    gpuUtilization: g.utilization.gpu,
+                    usedMemory: g.memory.used,
+                    totalMemory: g.memory.total,
                     processes: g.processes.map((p) => ({
                         pid: p.pid,
                         username: p.username,
                         command: p.command,
+                        name: p.name,
                         gpuMemoryUsage: p.gpu_memory_usage,
                     })),
                 })),

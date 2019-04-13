@@ -1,9 +1,8 @@
 <template>
   <div class="server">
     <template v-if="data">
-      <p>
-        <span class="hostname">{{ data.hostname }}</span>
-        <span>{{ displayAddress }}</span>
+      <p class="hostname">
+        {{ displayAddress }}
       </p>
       <p class="subtitle">{{ queryTime }}</p>
       <ul class="gpu-list">
@@ -27,7 +26,7 @@
               <tr v-for="p in gpu.processes" :key="`${gpu.index}-${p.pid}`">
                 <td>{{p.pid}}</td>
                 <td>{{p.username}}</td>
-                <td>{{p.command}}</td>
+                <td :title="p.command">{{p.name}}</td>
                 <td>{{gpu.index}}</td>
               </tr>
             </template>
@@ -99,7 +98,6 @@ thead {
 .hostname {
   font-size: 1.5em;
   font-weight: bold;
-  margin-right: 10px;
 }
 
 .gpu-list {

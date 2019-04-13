@@ -9,7 +9,7 @@
         class="memory-usage"
         :value="gpuStatus.usedMemory"
         :max="gpuStatus.totalMemory"
-        :title="`${gpuStatus.usedMemory}/${gpuStatus.totalMemory} MiB`"
+        :title="memoryUsage"
       />
       <span>使用率：{{ gpuUtilization }}</span>
     </div>
@@ -20,11 +20,19 @@
 <script lang="ts">
 import Vue from 'vue';
 import { GPUStatus } from '../api';
+
+function toMiB(b: number) {
+  return b / 1024 / 1024;
+}
+
 export default Vue.extend({
   props: {
     gpuStatus: Object as () => GPUStatus,
   },
   computed: {
+    memoryUsage(): string {
+      return `${toMiB(this.gpuStatus.usedMemory).toFixed(1)}/${toMiB(this.gpuStatus.totalMemory).toFixed(1)} MiB`;
+    },
     gpuUtilization(): string {
       return this.gpuStatus.gpuUtilization.toFixed(1) + '%';
     },

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>GPU服务器仪表盘/h1>
+    <h1>GPU服务器仪表盘</h1>
     <div class="server-container">
       <server v-for="addr in addresses" :key="addr" :address="addr"/>
     </div>
