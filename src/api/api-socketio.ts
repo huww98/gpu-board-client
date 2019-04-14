@@ -19,7 +19,7 @@ interface IOGPUData {
             username: string;
             command: string;
             name: string;
-            gpu_memory_usage: number;
+            memory: number;
         }>;
     }>;
     query_time: string;
@@ -48,7 +48,7 @@ export class GPUStatusPublisher {
                         username: p.username,
                         command: p.command,
                         name: p.name,
-                        gpuMemoryUsage: p.gpu_memory_usage,
+                        gpuMemoryUsage: p.memory,
                     })),
                 })),
             };

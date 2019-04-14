@@ -49,7 +49,7 @@ export default Vue.extend({
 progress.memory-usage {
   appearance: none;
   border: 0;
-  $width: 10em;
+  $width: 160px;
   width: $width;
   margin-right: 5px;
 
@@ -62,7 +62,10 @@ progress.memory-usage {
     background: $barColor
   }
 
-  &::-webkit-progress-value,
+  &::-webkit-progress-value {
+    background: $valueColor
+  }
+
   &::-moz-progress-bar {
     background: $valueColor
   }

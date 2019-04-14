@@ -10,29 +10,29 @@
           <gpu :gpu-status="gpu"/>
         </li>
       </ul>
-      <p>
-        进程列表：
-        <table>
-          <thead>
-            <tr>
-              <td>PID</td>
-              <td>用户</td>
-              <td>进程名</td>
-              <table>GPU</table>
+      <table class="process-table">
+        <caption>进程列表</caption>
+        <thead>
+          <tr>
+            <td>PID</td>
+            <td class="user-col">用户</td>
+            <td class="name-col">进程名</td>
+            <td>显存使用(MiB)</td>
+            <table>GPU</table>
+          </tr>
+        </thead>
+        <tbody>
+          <template v-for="gpu in data.gpus">
+            <tr v-for="p in gpu.processes" :key="`${gpu.index}-${p.pid}`">
+              <td>{{p.pid}}</td>
+              <td class="user-col" :title="p.username">{{p.username}}</td>
+              <td class="name-col" :title="p.command">{{p.name}}</td>
+              <td>{{(p.gpuMemoryUsage / 1024 / 1024).toFixed(1)}}</td>
+              <td>{{gpu.index}}</td>
             </tr>
-          </thead>
-          <tbody>
-            <template v-for="gpu in data.gpus">
-              <tr v-for="p in gpu.processes" :key="`${gpu.index}-${p.pid}`">
-                <td>{{p.pid}}</td>
-                <td>{{p.username}}</td>
-                <td :title="p.command">{{p.name}}</td>
-                <td>{{gpu.index}}</td>
-              </tr>
-            </template>
-          </tbody>
-        </table>
-      </p>
+          </template>
+        </tbody>
+      </table>
     </template>
     <template v-else>
       <p>
@@ -88,7 +88,7 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .server {
   margin: 15px;
-  width: 300px;
+  width: 320px;
 }
 
 thead {
@@ -108,4 +108,17 @@ thead {
   }
 }
 
+.process-table {
+  width: 100%;
+  .user-col {
+    max-width: 80px;
+  }
+  .name-col {
+    max-width: 70px;
+  }
+  td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
 </style>
