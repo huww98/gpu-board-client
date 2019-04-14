@@ -1,5 +1,15 @@
 # gpu-board-client
 
+## With Docker
+
+```shell
+docker run --detach --name gpu-board-client \
+    --publish 80 \
+    --volume /opt/gpu-board/config.json:/usr/share/nginx/html/config.json:ro \
+    --restart always \
+    huww98/gpu-board-client
+```
+
 ## Project setup
 ```
 npm install
