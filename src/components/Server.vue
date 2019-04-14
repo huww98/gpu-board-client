@@ -18,7 +18,7 @@
             <td class="user-col">用户</td>
             <td class="name-col">进程名</td>
             <td>显存使用(MiB)</td>
-            <table>GPU</table>
+            <td>GPU</td>
           </tr>
         </thead>
         <tbody>
